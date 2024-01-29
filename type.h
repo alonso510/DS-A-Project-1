@@ -6,32 +6,20 @@
 #define TYPE_H
 #include <string> 
 
-class Pet {
-private:
-  std::string species;
-  std::string breed;
-  std::string name;
-  char gender;
-  int age;
+struct StudentType
+{
+  std:: string classId;
+ std:: string studentName;
+int studentCLA;
+int studentOLA;
+int studentQuiz; 
+int studentHomework;
+int studentExam;
+int studentBonus;
 
-public:
-  // inline accessor functions
-  std::string GetName() const { return name; }
-  std::string GetBreed() const { return breed; }
 
-public:
-  // inline mutator functions
-  void SetSpecies(std::string sp) { species = sp; }
-  void SetBreed(std::string br) { breed = br; }
-  void SetName(std::string n) { name = n; }
-  void SetGender(char g) { gender = g; }
-  void SetAge(int a) { age = a; }
-  // Other Member Functions
-  void PrintPet() const; // Outputs the pet information
-  void PrintPets() const;
-  Pet();
-  Pet(std::string, std::string, std::string, char, int); // value constructor
-  void SavePets(std::ofstream &);
+
+  /* data */
 };
 
 #endif
