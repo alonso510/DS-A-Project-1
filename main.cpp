@@ -7,23 +7,27 @@
 
 const int MAX_SIZE = 20;
 
-int ReadStudents(std::ifstream &gradesFile, StudentType students[]);
+int ReadStudents(std::ifstream &gradesFile, StudentType students[]); //
 void DisplayStudents(StudentType roster[], int);
-void StudentSearch(StudentType roster[], int numOfItems, std::string itemToLookfor);
+void StudentSearch(StudentType roster[], int index);
 void SortMovies(StudentType roster[], int);
-int ValidId (StudentType roster[], std::string);
+int ValidId (StudentType roster[], int numOfStudents);
 int main() {
     StudentType roster[MAX_SIZE];
-    std::string studentId; 
+    
   
 
     std::ifstream gradesFile("grades.dat");// create file object 
-    int numofstudents = ReadStudents(gradesFile, roster);// get number of students while storing them in array
-    DisplayStudents(roster, numofstudents);
+    int numOfStudents = ReadStudents(gradesFile, roster);// get number of students while storing them in array
+    DisplayStudents(roster, numOfStudents);
  
-    StudentSearch(roster, numofstudents, studentId);
+    StudentSearch(roster, numOfStudents);
     return 0;
 }
+
+
+
+
 int ReadStudents(std::ifstream &gradesFile, StudentType students[]){
     int NumofStudents = 0; // get num of students 
     gradesFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // ignore the header line of the file 
@@ -50,6 +54,11 @@ int ReadStudents(std::ifstream &gradesFile, StudentType students[]){
 
     return NumofStudents;
 }
+
+
+
+
+
 void DisplayStudents(StudentType roster[], int NumofStudents){
  std::cout << std::setw(5) << "ID" << std::setw(15) << "Name"
           << std::setw(5) << "CLA" << std::setw(5) << "OLA"
@@ -71,38 +80,41 @@ for (int i = 0; i < NumofStudents; i++) {
   }
 
 
-  void StudentSearch(StudentType roster[], int numOfItems, std::string itemToLookfor){
-    int count = -1;
-     std::cout << "Enter student Id: ";
-   std::cin >> itemToLookfor;
-  std::cout << itemToLookfor; 
+void StudentSearch(StudentType roster[], int numOfStudents){
+  //call ValidID function. 
+  int i = ValidId(roster, numOfStudents);
 
-    for(int i = 0; i < numOfItems; i++){  // initialize loop to iterate through array and find student with class id 
-    
-   
-        if(roster[i].classId == itemToLookfor){  // once student is found, print student grades
-         int count = i; 
           std::cout << "Name: " << roster[i].studentName << std::endl 
           << "CLA: " << roster[i].studentCLA <<std::endl
-           <<  "OLA: " << roster[i].studentOLA << std::endl
+           << "OLA: " << roster[i].studentOLA << std::endl
           << "Quiz: "<< roster[i].studentQuiz << std::endl 
           <<"Homework:" <<roster[i].studentHomework << std::endl
           <<"Exam: " <<roster[i].studentExam << std::endl
           <<"Bonus: " <<roster[i].studentBonus << std::endl;
 
+
         }
         
-    }   
     
-    for(int i = 0; i < numOfItems; i++){
-
-      if(roster[i].classId == itemToLookfor){
-        ; 
-      }
-      if 
-
-    }
   
-   
-
+int ValidId(StudentType roster[], int numOfStudents){
+  int index;
+  std::string classId;// get user input for student id 
+   std::cout << "Enter student Id: ";
+     std::cin >> classId; // store input 
+  
+for(int i = 0; i <= numOfStudents; i++){
+  if (roster[i].classId == classId){ // loop and check if id matches
+    std::cout << roster[i].studentName << std::endl;
+    std::cout << "Information for student with ID: " << classId << std::endl; // print id if found 
+    return i;
   }
+  if (i == numOfStudents){ // if no match reset loop counter and prompt input 
+  std::cout << "Enter student Id: "; 
+  std::cin >> classId;
+  i = 0;
+  }
+}
+
+  return index; 
+}
