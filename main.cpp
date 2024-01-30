@@ -4,14 +4,16 @@
 #include <fstream>  
 #include <iomanip>
 #include <string>
+#include <algorithm>
 
-const int MAX_SIZE = 20;
+const int MAX_SIZE = 17;
 
-int ReadStudents(std::ifstream &gradesFile, StudentType students[]); //
+int ReadStudents(std::ifstream &gradesFile, StudentType students[]); //function prototypes 
 void DisplayStudents(StudentType roster[], int);
 void StudentSearch(StudentType roster[], int index);
-void SortMovies(StudentType roster[], int);
+void SortStudents(StudentType roster[], int numOfStudents);
 int ValidId (StudentType roster[], int numOfStudents);
+
 int main() {
     StudentType roster[MAX_SIZE];
     
@@ -22,6 +24,8 @@ int main() {
     DisplayStudents(roster, numOfStudents);
  
     StudentSearch(roster, numOfStudents);
+    SortStudents(roster, numOfStudents);
+    DisplayStudents(roster, numOfStudents); 
     return 0;
 }
 
@@ -31,8 +35,8 @@ int main() {
 int ReadStudents(std::ifstream &gradesFile, StudentType students[]){
     int NumofStudents = 0; // get num of students 
     gradesFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // ignore the header line of the file 
-    while (NumofStudents < MAX_SIZE && gradesFile){
-       gradesFile >>   students[NumofStudents].classId;
+    while (gradesFile){ // loop to iterate while the file is valid
+       gradesFile >>   students[NumofStudents].classId; // store data into array struct 
 
        gradesFile >>   students[NumofStudents].studentName;
        
@@ -48,11 +52,11 @@ int ReadStudents(std::ifstream &gradesFile, StudentType students[]){
             
        
        gradesFile >>   students[NumofStudents].studentBonus;
-       NumofStudents++; 
+       NumofStudents++; // increase the number of students for each student you store in array
   
     }
 
-    return NumofStudents;
+    return NumofStudents; 
 }
 
 
@@ -60,12 +64,12 @@ int ReadStudents(std::ifstream &gradesFile, StudentType students[]){
 
 
 void DisplayStudents(StudentType roster[], int NumofStudents){
- std::cout << std::setw(5) << "ID" << std::setw(15) << "Name"
+ std::cout << std::setw(5) << "ID" << std::setw(15) << "Name" // format header accordingly 
           << std::setw(5) << "CLA" << std::setw(5) << "OLA"
           << std::setw(5) << "Quiz" << std::setw(10) << "Homework"
           << std::setw(5) << "Exam" << std::setw(7) << "Bonus" << std::endl;
  
-for (int i = 0; i < NumofStudents; i++) {
+for (int i = 0; i <= NumofStudents; i++) { // loop through students, print data of each
   
     std::cout << std::setw(5) << roster[i].classId
               << std::setw(15) << roster[i].studentName
@@ -82,9 +86,9 @@ for (int i = 0; i < NumofStudents; i++) {
 
 void StudentSearch(StudentType roster[], int numOfStudents){
   //call ValidID function. 
-  int i = ValidId(roster, numOfStudents);
+  int i = ValidId(roster, numOfStudents);// call ValidID function that return index of array 
 
-          std::cout << "Name: " << roster[i].studentName << std::endl 
+          std::cout << "Name: " << roster[i].studentName << std::endl // print out individual student 
           << "CLA: " << roster[i].studentCLA <<std::endl
            << "OLA: " << roster[i].studentOLA << std::endl
           << "Quiz: "<< roster[i].studentQuiz << std::endl 
@@ -107,14 +111,42 @@ for(int i = 0; i <= numOfStudents; i++){
   if (roster[i].classId == classId){ // loop and check if id matches
     std::cout << roster[i].studentName << std::endl;
     std::cout << "Information for student with ID: " << classId << std::endl; // print id if found 
-    return i;
+    return i; // return index of array, which student ID to look for 
   }
-  if (i == numOfStudents){ // if no match reset loop counter and prompt input 
-  std::cout << "Enter student Id: "; 
-  std::cin >> classId;
+  if (i == numOfStudents){ // if no match reset loop counter 
+  std::cout << "Enter student Id: "; // prompt user input
+  std::cin >> classId;// store input 
   i = 0;
   }
 }
 
   return index; 
+}
+
+
+
+void SortStudents(StudentType roster[], int numOfStudents) {
+    bool sorted = false; // indicates whether additional comparison passes are needed 
+    int last = numOfStudents - 1;
+
+    StudentType tmp;
+
+    while (!sorted) {
+        sorted = true;
+
+        for (int i = 0; i < last; i++) {
+            if (roster[i].studentName > roster[i + 1].studentName) {
+                // Swap the two records
+                tmp = roster[i];
+                roster[i] = roster[i + 1];
+                roster[i + 1] = tmp;
+
+                // The remaining array is not sorted, need at least another pass
+                // of pairwise comparison
+                sorted = false;
+            }
+        }
+
+        last--;
+    }
 }
