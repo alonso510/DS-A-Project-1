@@ -64,6 +64,8 @@ int ReadStudents(std::ifstream &gradesFile, StudentType students[]){
 
 
 void DisplayStudents(StudentType roster[], int NumofStudents){
+
+  std::cout << std::endl << std::endl;
  std::cout << std::setw(5) << "ID" << std::setw(15) << "Name" // format header accordingly 
           << std::setw(5) << "CLA" << std::setw(5) << "OLA"
           << std::setw(5) << "Quiz" << std::setw(10) << "Homework"
@@ -81,7 +83,7 @@ for (int i = 0; i <= NumofStudents; i++) { // loop through students, print data 
               << std::setw(7) << roster[i].studentBonus << std::endl;
 }
  return; 
-  }
+ }
 
 
 void StudentSearch(StudentType roster[], int numOfStudents){
@@ -95,6 +97,8 @@ void StudentSearch(StudentType roster[], int numOfStudents){
           <<"Homework:" <<roster[i].studentHomework << std::endl
           <<"Exam: " <<roster[i].studentExam << std::endl
           <<"Bonus: " <<roster[i].studentBonus << std::endl;
+          std::cout << std::endl << std::endl; 
+          
 
 
         }
@@ -109,7 +113,7 @@ int ValidId(StudentType roster[], int numOfStudents){
   
 for(int i = 0; i <= numOfStudents; i++){
   if (roster[i].classId == classId){ // loop and check if id matches
-    std::cout << roster[i].studentName << std::endl;
+    
     std::cout << "Information for student with ID: " << classId << std::endl; // print id if found 
     return i; // return index of array, which student ID to look for 
   }
@@ -126,6 +130,7 @@ for(int i = 0; i <= numOfStudents; i++){
 
 
 void SortStudents(StudentType roster[], int numOfStudents) {
+  std::cout << "Sorting student records by name . . .  " << std::endl; 
     bool sorted = false; // indicates whether additional comparison passes are needed 
     int last = numOfStudents - 1;
 
