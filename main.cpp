@@ -71,7 +71,7 @@ void DisplayStudents(StudentType roster[], int NumofStudents){
           << std::setw(5) << "Quiz" << std::setw(10) << "Homework"
           << std::setw(5) << "Exam" << std::setw(7) << "Bonus" << std::endl;
  
-for (int i = 0; i <= NumofStudents; i++) { // loop through students, print data of each
+for (int i = 0; i < NumofStudents-1; i++) { // loop through students, print data of each
   
     std::cout << std::setw(5) << roster[i].classId
               << std::setw(15) << roster[i].studentName
