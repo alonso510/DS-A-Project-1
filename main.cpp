@@ -65,13 +65,13 @@ int ReadStudents(std::ifstream &gradesFile, StudentType students[]){
 
 void DisplayStudents(StudentType roster[], int NumofStudents){
 
-  std::cout << std::endl << std::endl;
+  std::cout <<"Here is the information of the " <<NumofStudents-1 << " students:" << std::endl << std::endl;
  std::cout << std::setw(5) << "ID" << std::setw(15) << "Name" // format header accordingly 
           << std::setw(5) << "CLA" << std::setw(5) << "OLA"
           << std::setw(5) << "Quiz" << std::setw(10) << "Homework"
           << std::setw(5) << "Exam" << std::setw(7) << "Bonus" << std::endl;
  
-for (int i = 0; i < NumofStudents-1; i++) { // loop through students, print data of each
+for (int i = 1; i < NumofStudents-1; i++) { // loop through students, print data of each
   
     std::cout << std::setw(5) << roster[i].classId
               << std::setw(15) << roster[i].studentName
@@ -97,7 +97,7 @@ void StudentSearch(StudentType roster[], int numOfStudents){
           <<"Homework:" <<roster[i].studentHomework << std::endl
           <<"Exam: " <<roster[i].studentExam << std::endl
           <<"Bonus: " <<roster[i].studentBonus << std::endl;
-          std::cout << std::endl << std::endl; 
+          std::cout << std::endl; 
           
 
 
@@ -130,7 +130,7 @@ for(int i = 0; i <= numOfStudents; i++){
 
 
 void SortStudents(StudentType roster[], int numOfStudents) {
-  std::cout << "Sorting student records by name . . .  " << std::endl; 
+  std::cout << "Sorting student records by name . . .  "<< std::endl << std::endl; 
     bool sorted = false; // indicates whether additional comparison passes are needed 
     int last = numOfStudents - 1;
 
