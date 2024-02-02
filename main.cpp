@@ -1,3 +1,6 @@
+//Alonso Nunez 
+// Program 1 CSCI 3110 
+
 #include "type.h"
 #include <iostream>
 #include <cassert>
@@ -6,7 +9,7 @@
 #include <string>
 #include <algorithm>
 
-const int MAX_SIZE = 17;
+
 
 int ReadStudents(std::ifstream &gradesFile, StudentType students[]); //function prototypes 
 void DisplayStudents(StudentType roster[], int);
@@ -15,6 +18,7 @@ void SortStudents(StudentType roster[], int numOfStudents);
 int ValidId (StudentType roster[], int numOfStudents);
 
 int main() {
+  const int MAX_SIZE = 17;// declare roster size
     StudentType roster[MAX_SIZE];
     
   
@@ -36,6 +40,7 @@ int ReadStudents(std::ifstream &gradesFile, StudentType students[]){
     int NumofStudents = 0; // get num of students 
     gradesFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // ignore the header line of the file 
     while (gradesFile){ // loop to iterate while the file is valid
+    
        gradesFile >>   students[NumofStudents].classId; // store data into array struct 
 
        gradesFile >>   students[NumofStudents].studentName;
@@ -71,8 +76,11 @@ void DisplayStudents(StudentType roster[], int NumofStudents){
           << std::setw(5) << "Quiz" << std::setw(10) << "Homework"
           << std::setw(5) << "Exam" << std::setw(7) << "Bonus" << std::endl;
  
-for (int i = 1; i < NumofStudents-1; i++) { // loop through students, print data of each
-  
+for (int i = 0; i < NumofStudents-1; i++) { // loop through students, print data of each
+  if(roster[i].studentCLA == 0){
+    i++;
+    NumofStudents++;
+  }
     std::cout << std::setw(5) << roster[i].classId
               << std::setw(15) << roster[i].studentName
               << std::setw(5) << roster[i].studentCLA
